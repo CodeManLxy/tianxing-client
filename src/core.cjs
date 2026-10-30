@@ -6,7 +6,7 @@ function atomic(file, value) {
   fs.mkdirSync(path.dirname(file), {recursive:true});
   const tmp = file + '.' + crypto.randomUUID() + '.tmp';
   fs.writeFileSync(tmp, typeof value === 'string' ? value : JSON.stringify(value,null,2), 'utf8');
-  try { fs.renameSync(tmp,file); } catch(e) { fs.rmSync(tmp,{force:true}); throw e; }
+  for(let attempt=0;;attempt++){try{fs.renameSync(tmp,file);break;}catch(e){if(!['EPERM','EACCES','EBUSY'].includes(e.code)||attempt===7){fs.rmSync(tmp,{force:true});throw e;}Atomics.wait(new Int32Array(new SharedArrayBuffer(4)),0,0,10*(attempt+1));}}
 }
 function json(file, fallback) { try { return JSON.parse(fs.readFileSync(file,'utf8').replace(/^\uFEFF/,'')); } catch(e) { if (fallback !== undefined) return fallback; throw e; } }
 function copyTree(source,destination){const s=path.resolve(source),d=path.resolve(destination);if(d===s||d.startsWith(s+path.sep))throw Error('复制目标不能位于源目录内');const walk=(from,to)=>{const st=fs.lstatSync(from);if(st.isSymbolicLink())throw Error('不复制符号链接');if(st.isDirectory()){fs.mkdirSync(to,{recursive:true});for(const name of fs.readdirSync(from))walk(path.join(from,name),path.join(to,name));}else{fs.mkdirSync(path.dirname(to),{recursive:true});fs.copyFileSync(from,to);}};walk(s,d);}

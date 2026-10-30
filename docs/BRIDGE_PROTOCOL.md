@@ -23,3 +23,7 @@ TXJ_Client/<bridgeId>/
 - 联合分析保存策略、周期和分析批次标记。每个周期每轮最多一笔，未勾选周期不可执行；同账户预算会累加。
 
 完整客户端校验见 `src/core.cjs`、`src/risk.cjs`、`src/execution.cjs` 和 `src/analysis-run.cjs`。测试中的账户、价格和回执均为合成值。
+
+## 客户端2.7回执展示
+
+客户端额外维护receipt-visibility.json与receipt-reconciliation.json，仅用于显示与本机核查，不修改EA回执或执行日志。expired为客户端依据过期时间和后续有效心跳解除阻塞的状态，不是券商拒绝证明。真实accepted/rejected优先；按TXJ指令备注可从实际订单、持仓或成交恢复接受结果。删除显示不删除submitted.json或EA日志，不能用来重发相同区域。

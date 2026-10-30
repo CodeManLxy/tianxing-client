@@ -11,7 +11,7 @@ const {atomic}=require('../src/core.cjs');
  try{
   const page=await app.firstWindow();page.on('pageerror',e=>errors.push(e.message));await page.waitForFunction(()=>document.querySelector('#connection').textContent==='MT5 已连接');
   await page.locator('#message').fill('用合成数据测试风险默认值，不发送订单。');await page.locator('#send').click();await page.locator('.plan-button').waitFor();
-  assert(calls[0].messages[0].content.includes('Sweep、MSS、指标 signal/rule_score'));assert(calls[0].messages[0].content.includes('客户端有交易执行通道'));
+  assert(calls[0].messages[0].content.includes('Sweep/MSS、指标评分'));assert(calls[0].messages[0].content.includes('不是机械硬门槛'));assert(calls[0].messages[0].content.includes('客户端有交易执行通道'));
   const risk=JSON.parse(calls.at(-1).messages.find(m=>m.role==='tool').content);assert.equal(risk.volume,0.1);assert.equal(risk.max_loss,100);assert(!fs.existsSync(path.join(dir,'inbox')));
   await page.locator('.plan-button').click();await page.waitForFunction(()=>document.querySelector('#volume').value==='0.1');assert.equal(await page.locator('#risk_percent').inputValue(),'1');assert.equal(await page.locator('#max_loss').inputValue(),'100');assert.equal(await page.locator('#max_spread').inputValue(),'0.21');
   await app.evaluate(({dialog})=>{globalThis.__confirmations=0;dialog.showMessageBox=async()=>{globalThis.__confirmations++;return {response:0};};});

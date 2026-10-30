@@ -1,6 +1,6 @@
 {
   "name": "tianxing-client",
-  "version": "2.6.0",
+  "version": "2.7.0",
   "description": "天行健 MT5 独立交易工作台",
   "main": "src/main.cjs",
   "author": "CodeManLxy",

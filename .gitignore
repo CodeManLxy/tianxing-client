@@ -37,3 +37,6 @@ Thumbs.db
 !/mt5/README.md
 !/mt5/SHA256SUMS.txt
 !/mt5/LICENSE-GPL-3.0.txt
+
+receipt-visibility.json
+receipt-reconciliation.json

@@ -1,5 +1,5 @@
 const crypto=require('node:crypto');
-const labels={submitted:'等待EA接收',processing:'EA处理中',accepted:'券商已接受',rejected:'已拒绝',unconfirmed:'结果未确认'};
+const labels={submitted:'等待EA接收',processing:'EA处理中',accepted:'券商已接受',rejected:'已拒绝',unconfirmed:'结果未确认',expired:'已过期并解除阻塞'};
 class AnalysisRun {
  constructor(scope,execution,state,noExecution=false){this.id=crypto.randomUUID();this.scope=scope;this.execution=execution;this.contexts=new Map(scope.targets.map(strategy=>[strategy.chartId,{chartId:strategy.chartId,strategy,noExecution,initialAccount:state.account?.login,initialServer:state.account?.server,initialSession:state.session,analysisId:this.id,batchScopeId:scope.multi?scope.historyKey.id:undefined}]));this.errors=new Map();}
  target(chartId){const target=this.scope.targets.find(t=>t.chartId===String(chartId));if(!target)throw Error('图表不在本轮勾选范围内，禁止提交');return target;}
