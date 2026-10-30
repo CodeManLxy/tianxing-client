@@ -1,0 +1,7 @@
+* text=auto
+
+# Keep the verified EA files byte-identical to their published checksums.
+mt5/*.mq5 -text
+mt5/*.mqh -text
+mt5/*.ex5 binary
+docs/images/*.png binary

@@ -11,7 +11,6 @@ coverage/
 *.mq5
 *.mq4
 *.mqh
-mt5/
 indicators/
 external/
 .env
@@ -28,3 +27,13 @@ skill-backups/
 *.pfx
 .DS_Store
 Thumbs.db
+
+# Publish only the communication EA; keep all indicator files excluded.
+/mt5/*
+!/mt5/TianXingBridge.ex5
+!/mt5/TianXingBridge.mq5
+!/mt5/Json.mqh
+!/mt5/SMCRead.mqh
+!/mt5/README.md
+!/mt5/SHA256SUMS.txt
+!/mt5/LICENSE-GPL-3.0.txt
